@@ -6,7 +6,7 @@ public class DealDamage : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"Sword hit: {other.name}  Tag={other.tag}");
+        Debug.Log($"Fist hit: {other.name}  Tag={other.tag}");
 
         Health enemy = other.GetComponentInParent<Health>();
         if (enemy != null)

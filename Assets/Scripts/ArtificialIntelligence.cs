@@ -14,7 +14,7 @@ public class ArtificialIntelligence : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -26,21 +26,21 @@ public class ArtificialIntelligence : MonoBehaviour
         if (distance > aggroRange)
         {
             agent.SetDestination(transform.position); //Stay where it is
-            animator.SetFloat("Speed", 0f);
+            animator.SetFloat("speed", 0f);
             return;
         }
-        
+       
         //Player inside aggro range = AI chases the player
         if (distance < aggroRange)
         {
             agent.SetDestination(target.position);
-            animator.SetFloat("Speed", agent.velocity.magnitude);
+            animator.SetFloat("speed", agent.velocity.magnitude);
         }
         if (distance <= stopDistance)
         {
             //Player very close = AI stop
             agent.SetDestination(transform.position);
-            animator.SetFloat("Speed", 0f);
+            animator.SetFloat("speed", 0f);
         }
     }
 }
