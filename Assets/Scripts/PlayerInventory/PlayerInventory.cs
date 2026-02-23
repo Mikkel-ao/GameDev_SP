@@ -15,7 +15,7 @@ public class PlayerInventory : MonoBehaviour
     /// Called when the player collects a coin.
     /// Increments the coin counter by one.
     /// </summary>
-    public void CoinCollected()
+    public void GemCollected()
     {
         NumberOfCoins++;
     }
