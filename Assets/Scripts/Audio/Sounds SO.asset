@@ -9,38 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6add5f4c83b4e764199bf7ae4f24061a, type: 3}
+  m_Script: {fileID: 11500000, guid: 33f508357bcaee144afc7b14073355d4, type: 3}
   m_Name: Sounds SO
   m_EditorClassIdentifier: Assembly-CSharp::SoundScripts.SoundManager_main.SoundsSO
-  sounds:
-  - name: WALK
-    volume: 1
-    mixer: {fileID: 0}
-    sounds:
-    - {fileID: 8300000, guid: ad56e4a186faf4bb0ad945333463aff4, type: 3}
-  - name: JUMP
-    volume: 1
-    mixer: {fileID: 0}
-    sounds:
-    - {fileID: 8300000, guid: 16038e3243a7741b4b4f3d17b7345a4a, type: 3}
-  - name: LAND
-    volume: 1
-    mixer: {fileID: 0}
-    sounds: []
-  - name: ATTACK
-    volume: 1
-    mixer: {fileID: 0}
-    sounds: []
-  - name: DAMAGE
-    volume: 1
-    mixer: {fileID: 0}
-    sounds: []
-  - name: DEATH
-    volume: 1
-    mixer: {fileID: 0}
-    sounds: []
-  - name: BACKGROUND
-    volume: 1
-    mixer: {fileID: 0}
-    sounds:
-    - {fileID: 8300000, guid: 5b1e1dc1c034a4e3c9ecd71633f00dd3, type: 3}
+  sounds: []

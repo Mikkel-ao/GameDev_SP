@@ -16,7 +16,7 @@ public class GemDisplay : MonoBehaviour
         // If playerInventory is not assigned, try to find it
         if (playerInventory == null)
         {
-            playerInventory = FindObjectOfType<PlayerInventory>();
+            playerInventory = FindFirstObjectByType<PlayerInventory>();
         }
 
         // Make sure we have both references
@@ -54,4 +54,3 @@ public class GemDisplay : MonoBehaviour
         }
     }
 }
-
