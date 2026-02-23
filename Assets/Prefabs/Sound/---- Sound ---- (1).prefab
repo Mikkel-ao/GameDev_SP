@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2466308498701859812}
   m_Layer: 0
-  m_Name: ---- Sound ----
+  m_Name: ---- Sound ---- (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 730122810198912861}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.63658, y: 2.40825, z: -61.96899}
+  m_LocalPosition: {x: 1.12549, y: 2.204, z: -79.49231}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -42,8 +42,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2007794031230381836}
   - component: {fileID: 1019038068608204631}
+  - component: {fileID: 8765798316889069363}
+  - component: {fileID: 2446767591784580985}
   m_Layer: 0
-  m_Name: AudioManager
+  m_Name: SoundManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,7 +81,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -161,3 +163,39 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8765798316889069363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3914956500595999649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 043d6c7cba358b34f9b4686cdaeef2ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundScripts.SoundManager_main.SoundManager
+  sounds:
+  - type: 6
+    clips:
+    - {fileID: 8300000, guid: ad775b1edd713f44f8a21b1c03e836f6, type: 3}
+    volume: 1
+  musicSource: {fileID: 0}
+  sfxSource: {fileID: 0}
+  volumeSlider: {fileID: 0}
+  masterVolume: 1
+  autoPlayBackground: 1
+--- !u!114 &2446767591784580985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3914956500595999649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07ba12e722ecb50439dd85deaebae229, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PauseMenu
+  menuPanel: {fileID: 0}
+  volumeSlider: {fileID: 0}

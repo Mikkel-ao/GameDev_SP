@@ -31,8 +31,11 @@ public class PauseMenu : MonoBehaviour
 
     void OnDestroy()
     {
-        inputActions.UI.Cancel.performed -= OnCancelInput;
-        inputActions.Dispose();
+        if (inputActions != null)
+        {
+            inputActions.UI.Cancel.performed -= OnCancelInput;
+            inputActions.Dispose();
+        }
     }
 
     private void OnCancelInput(InputAction.CallbackContext context)
