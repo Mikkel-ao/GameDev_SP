@@ -41,7 +41,7 @@ public class SoundManager : MonoBehaviour
     // Unity: initialize singleton and cache sources.
     private void Awake()
     {
-        // Singleton setup and keep across scenes.
+        // Singleton setup.
         if (instance == null)
         {
             instance = this;
@@ -49,7 +49,6 @@ public class SoundManager : MonoBehaviour
             {
                 musicSource = GetComponent<AudioSource>();
             }
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -158,10 +157,27 @@ public class SoundManager : MonoBehaviour
             return;
         }
 
+        // Ensure we have an sfxSource - create one if needed.
         if (sfxSource == null)
         {
+            // Try to use the existing AudioSource component
             sfxSource = GetComponent<AudioSource>();
+            
+            // If musicSource is using it, create a new one for SFX
+            if (sfxSource == musicSource || sfxSource.isPlaying)
+            {
+                Debug.Log("SoundManager: Creating separate AudioSource for SFX.");
+                sfxSource = gameObject.AddComponent<AudioSource>();
+            }
         }
+
+        if (sfxSource == null)
+        {
+            Debug.LogError("SoundManager: Failed to create sfxSource!");
+            return;
+        }
+
+        Debug.Log($"SoundManager: Playing SFX '{type}' at volume {entry.volume * volumeMultiplier * masterVolume}");
 
         AudioClip clip = entry.clips[Random.Range(0, entry.clips.Length)];
         sfxSource.PlayOneShot(clip, entry.volume * volumeMultiplier * masterVolume);

@@ -11,6 +11,7 @@ public class PlaySoundEnter : StateMachineBehaviour
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        Debug.Log($"PlaySoundEnter: Animation state entered '{stateInfo.shortNameHash}', playing sound '{sound}' with volume {volume}");
         SoundManager.PlaySound(sound, volume);
     }
 }
