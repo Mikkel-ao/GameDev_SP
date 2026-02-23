@@ -91,12 +91,5 @@ The new system is much simpler:
 
 ---
 
-## 🗑️ What We Removed
-
-- ❌ SoundsSO.cs (ScriptableObject - not needed)
-- ❌ SoundsSOEditor.cs (Editor script - not needed)
-- ❌ AudioManager.cs (handled by SoundManager now)
-- ❌ Complex audio mixer groups - simplified to just volume
-
 This keeps everything simple and easy to use!
 
