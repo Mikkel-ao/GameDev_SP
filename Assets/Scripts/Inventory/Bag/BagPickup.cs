@@ -1,63 +1,46 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 /// <summary>
-/// Place this on the Bag_4 prefab in the world.
-/// When the player walks into the trigger the bag:
-///   1. Calls a method on the player so they "own" it.
-///   2. Attaches itself visually to a socket on the player (e.g. a back bone).
-///   3. Disables its own collider so it can't be re-collected.
-///
-/// Setup:
-///  - Set the MeshCollider on Bag_4 to IsTrigger = true (or add a separate
-///    trigger collider — a small SphereCollider works great).
-///  - On the Player GameObject, add an empty child called "BagSocket" and
-///    position it on the player's back.
-///  - Assign that Transform to the bagSocket field below.
+/// Handles the pickup of the inventory bag.
+/// Attaches the bag to the player and enables inventory functionality.
+/// Can only be picked up once.
 /// </summary>
 public class BagPickup : MonoBehaviour
 {
     [Header("Socket on the player where the bag attaches")]
-    [Tooltip("Drag the 'BagSocket' child Transform from your Player here.")]
     [SerializeField] private Transform bagSocket;
 
-    [Header("Local offset inside the socket (fine-tune position/rotation)")]
+    [Header("Local offset inside the socket")]
     [SerializeField] private Vector3 attachPositionOffset = Vector3.zero;
     [SerializeField] private Vector3 attachRotationOffset = Vector3.zero;
     [SerializeField] private Vector3 attachScale = Vector3.one;
 
-    private bool _hasBeenPickedUp = false;
+    private bool _hasBeenPickedUp;
 
     private void OnTriggerEnter(Collider other)
     {
+        // Prevent picking up the same bag twice
         if (_hasBeenPickedUp) return;
 
-        PlayerInventory playerInventory = other.GetComponent<PlayerInventory>();
-        if (playerInventory == null) return;
+        // Only the player can pick up the bag
+        if (!other.CompareTag("Player") && !other.CompareTag("Capsule")) return;
 
         _hasBeenPickedUp = true;
-
-        Debug.Log("[BagPickup] Player picked up the bag!");
-
-        // Disable collider(s) so it can't be triggered again
+        
+        // Disable collider so it can't be picked up again
         foreach (Collider col in GetComponents<Collider>())
             col.enabled = false;
 
-        // Attach visually to the player
-        AttachToPlayer(playerInventory);
-    }
-
-    private void AttachToPlayer(PlayerInventory playerInventory)
-    {
-        // Prefer the serialized socket; fall back to the player root
-        Transform socket = bagSocket != null
-            ? bagSocket
-            : playerInventory.transform;
-
-        transform.SetParent(socket);
+        // Attach bag to player's designated socket
+        transform.SetParent(bagSocket);
         transform.localPosition = attachPositionOffset;
         transform.localEulerAngles = attachRotationOffset;
         transform.localScale = attachScale;
+        
+        // Notify InventoryManager that player now has a bag
+        InventoryManager.instance.PickedUpBag();
 
-        Debug.Log($"[BagPickup] Bag attached to '{socket.name}'.");
+        Debug.Log("Bag picked up and attached to player!");
     }
 }
