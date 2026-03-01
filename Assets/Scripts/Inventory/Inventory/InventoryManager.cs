@@ -2,7 +2,7 @@ using UnityEngine;
 
 /// <summary>
 /// Central manager for the entire inventory system.
-/// Tracks if player has the bag, manages item pickups, and communicates with UI.
+/// Tracks if player has the bag, manages item pickups (including stackable items), and communicates with UI.
 /// Uses singleton pattern to be easily accessible from other scripts.
 /// </summary>
 public class InventoryManager : MonoBehaviour
@@ -42,22 +42,60 @@ public class InventoryManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Tries to add an item to the first available inventory slot.
-    /// If no empty slots are available, logs "Inventory is full!".
+    /// Tries to add an item to the inventory.
+    /// Handles both stackable and non-stackable items.
+    /// If stackable, tries to add to existing stack first.
+    /// If non-stackable or no room to stack, finds a new empty slot.
+    /// Returns true if the item was successfully added, false if inventory is full.
     /// </summary>
-    public void PickupItem(Sprite icon)
+    public bool PickupItem(ItemData itemData, int quantity = 1)
     {
+        // Validate inputs
+        if (itemData == null)
+        {
+            Debug.LogError("InventoryManager: itemData is null!");
+            return false;
+        }
+
         // Check if slots array is assigned
         if (slots == null || slots.Length == 0)
         {
             Debug.LogError("InventoryManager: slots array is not assigned or empty! Assign slots in the Inspector.");
-            return;
+            return false;
         }
 
-        // Find the first empty slot and add the item there
+        // If item is stackable, try to add to existing stack first
+        if (itemData.isStackable)
+        {
+            for (int i = 0; i < slots.Length; i++)
+            {
+                if (slots[i] == null)
+                {
+                    Debug.LogError($"InventoryManager: Slot at index {i} is NULL! You need to assign a GameObject with InventorySlot script to this slot in the Inspector.");
+                    continue;
+                }
+
+                // Check if this slot has the same item and can accept more
+                if (slots[i].ContainsItem(itemData) && slots[i].CanAddItem(itemData))
+                {
+                    int amountToAdd = Mathf.Min(quantity, itemData.GetMaxStackSize() - slots[i].GetQuantity());
+                    slots[i].IncreaseQuantity(amountToAdd);
+                    Debug.Log($"Item stacked! Added {amountToAdd} to slot {i}. Total: {slots[i].GetQuantity()}");
+                    
+                    // If there's still quantity left, recursively add the rest
+                    int remaining = quantity - amountToAdd;
+                    if (remaining > 0)
+                    {
+                        return PickupItem(itemData, remaining);
+                    }
+                    return true;
+                }
+            }
+        }
+
+        // No existing stack found (or item is not stackable), find empty slot
         for (int i = 0; i < slots.Length; i++)
         {
-            // Check if this slot reference is null
             if (slots[i] == null)
             {
                 Debug.LogError($"InventoryManager: Slot at index {i} is NULL! You need to assign a GameObject with InventorySlot script to this slot in the Inspector.");
@@ -66,13 +104,20 @@ public class InventoryManager : MonoBehaviour
 
             if (slots[i].IsEmpty())
             {
-                slots[i].AddItem(icon);
+                slots[i].AddItem(itemData, quantity);
                 Debug.Log($"Item picked up! Added to inventory slot {i}.");
-                return;
+                return true;
             }
         }
 
         // All slots are full
         Debug.Log("Inventory is full!");
+        return false;
+    }
+
+    // Backward compatibility method (legacy for Sprite-based pickups)
+    public void PickupItem(Sprite icon)
+    {
+        Debug.LogWarning("InventoryManager: Using legacy PickupItem(Sprite) method. Please use PickupItem(ItemData) instead!");
     }
 }

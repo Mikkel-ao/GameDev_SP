@@ -1,13 +1,16 @@
 using UnityEngine;
 
 /// <summary>
-/// Handles the pickup of inventory items (keys, gems, etc).
+/// Handles the pickup of inventory items (keys, gems, potions, etc).
 /// Items can only be picked up if the player has the bag.
+/// Supports both stackable and non-stackable items via ItemData.
 /// When picked up, the item is destroyed and added to inventory.
+/// Items are NOT destroyed if the inventory is full.
 /// </summary>
 public class ItemPickup : MonoBehaviour
 {
-    public Sprite itemIcon; // drag your item sprite (key, gem, etc) here in inspector
+    [SerializeField] private ItemData itemData; // Drag your ItemData asset here in inspector
+    [SerializeField] private int quantity = 1; // How many of this item to pick up (for stackable items)
 
     void OnTriggerEnter(Collider other)
     {
@@ -21,9 +24,26 @@ public class ItemPickup : MonoBehaviour
                 return;
             }
 
-            // Add item to inventory and destroy this object
-            InventoryManager.instance.PickupItem(itemIcon);
-            Destroy(gameObject);
+            // Validate that ItemData is assigned
+            if (itemData == null)
+            {
+                Debug.LogError($"ItemPickup on {gameObject.name}: itemData is not assigned! Assign an ItemData asset in the Inspector.");
+                return;
+            }
+
+            // Try to add item to inventory
+            bool wasSuccessful = InventoryManager.instance.PickupItem(itemData, quantity);
+            
+            // Only destroy this object if the item was successfully added
+            if (wasSuccessful)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                Debug.Log($"Could not pick up {itemData.itemName} - Inventory is full!");
+            }
         }
     }
 }
+
