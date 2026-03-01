@@ -73,6 +73,10 @@ public class SimpleAILogic : MonoBehaviour
         }
     }
 
+    void combat()
+    {
+        
+    }
     public static Vector3 RandomNavSphere(Vector3 origin, float distance)
     {
         Vector3 randomDirection = Random.insideUnitSphere * distance + origin;
