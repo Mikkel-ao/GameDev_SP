@@ -9,11 +9,12 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager instance; // Singleton instance for easy access
 
-    public InventorySlot[] slots; // All inventory slots - drag them here in inspector
+    [SerializeField] public InventorySlot[] slots; // All inventory slots - drag them here in inspector
     
-    public InventoryUIToggle uiToggle; // Reference to UI toggle script - drag here in inspector
+    [SerializeField] public InventoryUIToggle uiToggle; // Reference to UI toggle script - drag here in inspector
 
     private bool _hasBag; // Flag: true when player has picked up the bag
+
 
     void OnEnable()
     {
@@ -48,7 +49,7 @@ public class InventoryManager : MonoBehaviour
     /// If non-stackable or no room to stack, finds a new empty slot.
     /// Returns true if the item was successfully added, false if inventory is full.
     /// </summary>
-    public bool PickupItem(ItemData itemData, int quantity = 1)
+    public bool PickupItem(ItemData itemData, int quantity)
     {
         // Validate inputs
         if (itemData == null)

@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 /// Manages the visibility of the inventory UI panel.
 /// Listens for TAB key presses and toggles the inventory display.
 /// Only works after the player has picked up the bag.
+/// Disables input when pause menu is active.
 /// </summary>
 public class InventoryUIToggle : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class InventoryUIToggle : MonoBehaviour
     private bool _hasBag; // Flag: true when player has picked up the bag
     private bool _isOpen; // Flag: tracks if inventory is currently open
     private InputAction _tabAction; // Input action for TAB key detection
+    private bool _isInputEnabled = true; // Flag to disable input when pause menu is open
 
     void Start()
     {
@@ -54,13 +56,31 @@ public class InventoryUIToggle : MonoBehaviour
 
     /// <summary>
     /// Called when TAB key is pressed. Toggles the inventory panel visibility.
+    /// Only toggles if inventory input is enabled (pause menu is not open).
     /// </summary>
     private void OnTabPressed(InputAction.CallbackContext context)
     {
-        if (!_hasBag) return; // Only toggle if player has the bag
+        if (!_hasBag || !_isInputEnabled) return; // Only toggle if player has the bag AND input is enabled
         
         Debug.Log("TAB PRESSED - Toggling inventory!");
         _isOpen = !_isOpen;
         inventoryUI.SetActive(_isOpen);
+    }
+
+    /// <summary>
+    /// Called by PauseMenu when pause menu opens/closes.
+    /// Disables inventory input when pause menu is open.
+    /// </summary>
+    public void SetInputEnabled(bool enabled)
+    {
+        _isInputEnabled = enabled;
+        
+        // Also close the inventory when pause menu opens
+        if (!enabled && _isOpen)
+        {
+            _isOpen = false;
+            inventoryUI.SetActive(false);
+            Debug.Log("Pause menu opened - closing inventory!");
+        }
     }
 }

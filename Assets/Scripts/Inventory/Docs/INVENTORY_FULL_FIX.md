@@ -1,4 +1,4 @@
-﻿# Full Inventory Pickup Fix - Complete
+﻿# Inventory Full Pickup Fix
 
 ## ✅ Problem Fixed
 
