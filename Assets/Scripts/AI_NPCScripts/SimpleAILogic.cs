@@ -45,6 +45,7 @@ public class SimpleAILogic : MonoBehaviour
         else if (distanceToTarget <= stopDistance)
         {
             agent.SetDestination(transform.position);
+            combat();
         }
         // ---- TARGET LOST ----
         if (distanceToTarget > aggroRange)
