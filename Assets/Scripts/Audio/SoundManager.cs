@@ -1,124 +1,202 @@
-//Author: Small Hedge Games
-//Updated: 13/06/2024
-
-using System;
 using UnityEngine;
-using UnityEngine.Audio;
+using UnityEngine.UI;
 
-namespace SoundScripts.SoundManager_main
+// Central audio controller: plays background music and SFX based on SoundType.
+[RequireComponent(typeof(AudioSource))]
+public class SoundManager : MonoBehaviour
 {
-    [RequireComponent(typeof(AudioSource))]
-    public class SoundManager : MonoBehaviour
+    [System.Serializable]
+    public struct SoundEntry
     {
-        [SerializeField] private SoundsSO SO;
-        [SerializeField] private bool autoPlayBackground = true;
-        private static SoundManager instance = null;
-        private AudioSource audioSource;
+        // Sound identifier.
+        public SoundType type;
+        // One or more clips for random variation.
+        public AudioClip[] clips;
+        // Per-sound volume multiplier.
+        [Range(0f, 1f)] public float volume;
+    }
 
-        private void Awake()
+    [Header("Clips")]
+    // Library of sounds available to the manager.
+    [SerializeField] private SoundEntry[] sounds;
+
+    [Header("Sources")]
+    // Music plays from musicSource, SFX from sfxSource.
+    [SerializeField] private AudioSource musicSource;
+    [SerializeField] private AudioSource sfxSource;
+
+    [Header("UI")]
+    // Optional UI slider to control master volume.
+    [SerializeField] private Slider volumeSlider;
+    // Global volume applied to all sounds.
+    [Range(0f, 1f)] [SerializeField] private float masterVolume = 1f;
+
+    [Header("Background")]
+    // Auto-start background music on scene load.
+    [SerializeField] private bool autoPlayBackground = true;
+
+    // Singleton instance for static access.
+    private static SoundManager instance;
+
+    // Unity: initialize singleton and cache sources.
+    private void Awake()
+    {
+        // Singleton setup.
+        if (instance == null)
         {
-            if(!instance)
+            instance = this;
+            if (musicSource == null)
             {
-                instance = this;
-                audioSource = GetComponent<AudioSource>();
-
-                Debug.Log($"SoundManager Awake: SO assigned = {SO != null}, audioSource found = {audioSource != null}");
-
-                // Auto-play background if configured
-                if (SO != null && autoPlayBackground)
-                {
-                    // Check if background entry exists and has clips before trying
-                    if (SO.sounds != null && SO.sounds.Length > (int)SoundType.BACKGROUND && SO.sounds[(int)SoundType.BACKGROUND].sounds.Length > 0)
-                    {
-                        Debug.Log("SoundManager: Auto-playing background music.");
-                        PlaySound(SoundType.BACKGROUND);
-                    }
-                    else
-                    {
-                        Debug.Log("SoundManager: Background entry missing or has no clips.");
-                    }
-                }
-
-                // Keep across scenes so background music and manager persist
-                DontDestroyOnLoad(gameObject);
-            }
-            else
-            {
-                // Prevent duplicate managers
-                Destroy(gameObject);
+                musicSource = GetComponent<AudioSource>();
             }
         }
-
-        public static void PlaySound(SoundType sound, AudioSource source = null, float volume = 1)
+        else
         {
-            if (instance == null)
-            {
-                Debug.LogWarning("SoundManager: No instance available to play sound.");
-                return;
-            }
-
-            if (instance.SO == null)
-            {
-                Debug.LogWarning("SoundManager: No Sounds SO assigned on the SoundManager instance.");
-                return;
-            }
-
-            // Validate sounds array exists and contains the requested index
-            if (instance.SO.sounds == null || instance.SO.sounds.Length <= (int)sound)
-            {
-                Debug.LogWarning($"SoundManager: Sounds SO does not contain an entry for '{sound}'.");
-                return;
-            }
-
-            SoundList soundList = instance.SO.sounds[(int)sound];
-            AudioClip[] clips = soundList.sounds;
-
-            if (clips == null || clips.Length == 0)
-            {
-                Debug.LogWarning($"SoundManager: No clips assigned for sound '{sound}'.");
-                return;
-            }
-
-            AudioClip randomClip = clips[UnityEngine.Random.Range(0, clips.Length)];
-
-            // Ensure manager audio source exists
-            if (instance.audioSource == null)
-                instance.audioSource = instance.GetComponent<AudioSource>();
-
-            if (source != null)
-            {
-                source.outputAudioMixerGroup = soundList.mixer;
-                source.clip = randomClip;
-                source.volume = volume * soundList.volume;
-                source.loop = sound == SoundType.BACKGROUND;
-                source.Play();
-            }
-            else
-            {
-                instance.audioSource.outputAudioMixerGroup = soundList.mixer;
-
-                if (sound == SoundType.BACKGROUND)
-                {
-                    // Use the manager's audio source for background music so it can loop
-                    instance.audioSource.clip = randomClip;
-                    instance.audioSource.volume = volume * soundList.volume;
-                    instance.audioSource.loop = true;
-                    instance.audioSource.Play();
-                }
-                else
-                {
-                    instance.audioSource.PlayOneShot(randomClip, volume * soundList.volume);
-                }
-            }
+            Destroy(gameObject);
         }
     }
 
-    [Serializable]
-    public struct SoundList
+    // Unity: bind slider when object becomes active.
+    private void OnEnable()
     {
-        [HideInInspector] public string name;
-        [Range(0, 1)] public float volume;
-        public AudioMixerGroup mixer;
-        public AudioClip[] sounds;
+        BindSlider(volumeSlider);
+    }
+
+    // Unity: finalize UI binding and optionally play background.
+    private void Start()
+    {
+        BindSlider(volumeSlider);
+
+        if (autoPlayBackground)
+        {
+            PlayBackground();
+        }
+    }
+
+    // Unity: cleanup slider listener.
+    private void OnDestroy()
+    {
+        if (volumeSlider != null)
+        {
+            volumeSlider.onValueChanged.RemoveListener(SetMasterVolume);
+        }
+    }
+
+    // Hook a UI slider to master volume updates.
+    public void BindSlider(Slider slider)
+    {
+        if (slider == null)
+        {
+            return;
+        }
+
+        // Bind UI slider to master volume.
+        volumeSlider = slider;
+        volumeSlider.onValueChanged.RemoveListener(SetMasterVolume);
+        volumeSlider.onValueChanged.AddListener(SetMasterVolume);
+        volumeSlider.SetValueWithoutNotify(masterVolume);
+    }
+
+    // Update master volume and keep looping music in sync.
+    public void SetMasterVolume(float volume)
+    {
+        masterVolume = Mathf.Clamp01(volume);
+
+        // Keep background volume in sync with master volume.
+        if (musicSource != null && musicSource.loop)
+        {
+            SoundEntry entry = FindSound(SoundType.BACKGROUND);
+            musicSource.volume = entry.volume * masterVolume;
+        }
+    }
+
+    // Static helper to play SFX by type.
+    public static void PlaySound(SoundType type, float volumeMultiplier = 1f)
+    {
+        if (instance == null)
+        {
+            Debug.LogWarning("SoundManager: Instance not found!");
+            return;
+        }
+
+        // Simple static entry point for SFX.
+        instance.PlaySfx(type, volumeMultiplier);
+    }
+
+    // Play looping background music using BACKGROUND entry.
+    public void PlayBackground()
+    {
+        // Start looping background music.
+        SoundEntry entry = FindSound(SoundType.BACKGROUND);
+        if (entry.clips == null || entry.clips.Length == 0)
+        {
+            Debug.LogWarning("SoundManager: No BACKGROUND clips assigned.");
+            return;
+        }
+
+        if (musicSource == null)
+        {
+            Debug.LogWarning("SoundManager: No musicSource assigned.");
+            return;
+        }
+
+        AudioClip clip = entry.clips[Random.Range(0, entry.clips.Length)];
+        musicSource.clip = clip;
+        musicSource.volume = entry.volume * masterVolume;
+        musicSource.loop = true;
+        musicSource.Play();
+    }
+
+    // Internal SFX playback with volume scaling.
+    private void PlaySfx(SoundType type, float volumeMultiplier)
+    {
+        SoundEntry entry = FindSound(type);
+        if (entry.clips == null || entry.clips.Length == 0)
+        {
+            Debug.LogWarning($"SoundManager: No clips assigned for '{type}'.");
+            return;
+        }
+
+        // Ensure we have an sfxSource - create one if needed.
+        if (sfxSource == null)
+        {
+            // Try to use the existing AudioSource component
+            sfxSource = GetComponent<AudioSource>();
+            
+            // If musicSource is using it, create a new one for SFX
+            if (sfxSource == musicSource || sfxSource.isPlaying)
+            {
+                Debug.Log("SoundManager: Creating separate AudioSource for SFX.");
+                sfxSource = gameObject.AddComponent<AudioSource>();
+            }
+        }
+
+        if (sfxSource == null)
+        {
+            Debug.LogError("SoundManager: Failed to create sfxSource!");
+            return;
+        }
+
+        Debug.Log($"SoundManager: Playing SFX '{type}' at volume {entry.volume * volumeMultiplier * masterVolume}");
+
+        AudioClip clip = entry.clips[Random.Range(0, entry.clips.Length)];
+        sfxSource.PlayOneShot(clip, entry.volume * volumeMultiplier * masterVolume);
+    }
+
+    // Lookup a sound entry by type.
+    private SoundEntry FindSound(SoundType type)
+    {
+        if (sounds != null)
+        {
+            for (int i = 0; i < sounds.Length; i++)
+            {
+                if (sounds[i].type == type)
+                {
+                    return sounds[i];
+                }
+            }
+        }
+
+        return new SoundEntry { type = type, clips = new AudioClip[0], volume = 1f };
     }
 }
