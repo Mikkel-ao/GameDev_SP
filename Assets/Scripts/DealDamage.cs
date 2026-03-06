@@ -8,7 +8,7 @@ public class DealDamage : MonoBehaviour
     {
         Debug.Log($"Sword hit: {other.name}  Tag={other.tag}");
 
-        Health enemy = other.GetComponentInParent<Health>();
+        HealthPlayer enemy = other.GetComponentInParent<HealthPlayer>();
         if (enemy != null)
         {
             Debug.Log($"{gameObject.name} dealt {damage} damage!");

@@ -5,7 +5,7 @@ using UnityEngine;
 /// Communicates with the HealthBar UI to display current health.
 /// Handles damage, death, and cleanup.
 /// </summary>
-public class Health : MonoBehaviour
+public class HealthPlayer : MonoBehaviour
 {
     [SerializeField] private float health = 100f; // Current health (default: 100)
     private float maxHealth; // Store the maximum health value
