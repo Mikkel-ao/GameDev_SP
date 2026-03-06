@@ -1,5 +1,5 @@
 using UnityEngine;
-
+/*
 /// <summary>
 /// Manages the health of the player or enemies.
 /// Communicates with the HealthBar UI to display current health.
@@ -90,3 +90,4 @@ public class HealthPlayer : MonoBehaviour
        Destroy(gameObject, 3.4f);
     }
 }
+*/
