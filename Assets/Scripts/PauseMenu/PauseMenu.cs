@@ -19,7 +19,7 @@ public class PauseMenu : MonoBehaviour
             soundManager.BindSlider(volumeSlider);
         }
     }
-    
+
 
     void Start()
     {
@@ -29,10 +29,10 @@ public class PauseMenu : MonoBehaviour
         inputActions.UI.Enable();
         inputActions.UI.Cancel.performed += OnCancelInput;
 
-        // Auto-find InventoryUIToggle if not assigned
+        // Auto-find InventoryUIToggle if not assigned (search INACTIVE objects too!)
         if (inventoryUIToggle == null)
         {
-            inventoryUIToggle = FindFirstObjectByType<InventoryUIToggle>();
+            inventoryUIToggle = FindFirstObjectByType<InventoryUIToggle>(FindObjectsInactive.Include);
             
             if (inventoryUIToggle != null)
             {
