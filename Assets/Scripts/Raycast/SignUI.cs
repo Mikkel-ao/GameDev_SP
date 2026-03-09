@@ -2,26 +2,36 @@ using UnityEngine;
 
 public class SignUI : MonoBehaviour
 {
-    [SerializeField] GameObject welcomePanel;
+    [SerializeField] private GameObject welcomePanel;
 
-    void Start()
+    private void Awake()
     {
+        if (welcomePanel == null)
+        {
+            Debug.LogWarning("SignUI: welcomePanel is not assigned.", this);
+            return;
+        }
+
         welcomePanel.SetActive(false);
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (!other.CompareTag("Player") || welcomePanel == null)
         {
-            welcomePanel.SetActive(true);
+            return;
         }
+
+        welcomePanel.SetActive(true);
     }
 
-    void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (!other.CompareTag("Player") || welcomePanel == null)
         {
-            welcomePanel.SetActive(false);
+            return;
         }
+
+        welcomePanel.SetActive(false);
     }
 }

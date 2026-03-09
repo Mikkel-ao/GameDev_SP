@@ -3,44 +3,82 @@ using UnityEngine.UI;
 
 /// <summary>
 /// Manages the visual representation of a healthbar.
-/// Scales the green fill image based on current health percentage.
 /// </summary>
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] private Image healthFill; // The green image that represents current health
-    private float maxHealth = 100f; // Maximum health (default: 100)
-    private float currentHealth; // Current health value
+    [SerializeField] private Image healthFill;
+    [SerializeField] private Health targetHealth;
 
-    void Start()
+    private float maxHealth = 100f;
+    private float currentHealth = 100f;
+
+    private void OnEnable()
     {
-        // Initialize health to max
+        // Rebind when UI is enabled again (e.g., menu/pause toggles).
+        if (targetHealth != null)
+        {
+            Bind(targetHealth);
+        }
+        else
+        {
+            UpdateHealthBar();
+        }
+    }
+
+    private void OnDisable()
+    {
+        Unbind();
+    }
+
+    public void Bind(Health health)
+    {
+        // Ensure we are never subscribed to more than one Health source.
+        Unbind();
+
+        targetHealth = health;
+        if (targetHealth == null)
+        {
+            return;
+        }
+
+        targetHealth.OnHealthChanged += HandleHealthChanged;
+        HandleHealthChanged(targetHealth.CurrentHealth, targetHealth.MaxHealth);
+    }
+
+    public void Unbind()
+    {
+        if (targetHealth == null)
+        {
+            return;
+        }
+
+        // Stop listening to avoid duplicate updates/leaks on disable/swap.
+        targetHealth.OnHealthChanged -= HandleHealthChanged;
+    }
+
+    // Kept for compatibility with any existing calls in your project.
+    public void UpdateHealth(float newHealth)
+    {
+        currentHealth = Mathf.Clamp(newHealth, 0f, maxHealth);
+        UpdateHealthBar();
+    }
+
+    // Kept for compatibility with any existing calls in your project.
+    public void SetMaxHealth(float max)
+    {
+        maxHealth = Mathf.Max(1f, max);
         currentHealth = maxHealth;
         UpdateHealthBar();
     }
 
-    /// <summary>
-    /// Called by the Health script when damage is taken.
-    /// Updates the healthbar display based on remaining health.
-    /// </summary>
-    public void UpdateHealth(float newHealth)
+    private void HandleHealthChanged(float newHealth, float newMaxHealth)
     {
-        currentHealth = newHealth;
+        // Keep safe bounds even if values are changed from Inspector/runtime.
+        maxHealth = Mathf.Max(1f, newMaxHealth);
+        currentHealth = Mathf.Clamp(newHealth, 0f, maxHealth);
         UpdateHealthBar();
     }
 
-    /// <summary>
-    /// Sets the maximum health value (used for initialization).
-    /// </summary>
-    public void SetMaxHealth(float max)
-    {
-        maxHealth = max;
-        currentHealth = max;
-        UpdateHealthBar();
-    }
-
-    /// <summary>
-    /// Updates the healthbar visual by scaling the fill image.
-    /// </summary>
     private void UpdateHealthBar()
     {
         if (healthFill == null)
@@ -49,36 +87,24 @@ public class HealthBar : MonoBehaviour
             return;
         }
 
-        // Calculate health percentage (0 to 1)
         float healthPercentage = Mathf.Clamp01(currentHealth / maxHealth);
-
-        // Scale the fill image width based on health percentage
         RectTransform rectTransform = healthFill.GetComponent<RectTransform>();
         if (rectTransform != null)
         {
-            // Scale the X axis to represent health percentage
+            // X scale from 0..1 controls the visible fill amount.
             Vector3 scale = rectTransform.localScale;
             scale.x = healthPercentage;
             rectTransform.localScale = scale;
         }
-
-        Debug.Log($"HealthBar: Health = {currentHealth}/{maxHealth} ({healthPercentage * 100:F1}%)");
     }
 
-    /// <summary>
-    /// Returns the current health value (for debugging or UI display).
-    /// </summary>
     public float GetCurrentHealth()
     {
         return currentHealth;
     }
 
-    /// <summary>
-    /// Returns the max health value.
-    /// </summary>
     public float GetMaxHealth()
     {
         return maxHealth;
     }
 }
-
