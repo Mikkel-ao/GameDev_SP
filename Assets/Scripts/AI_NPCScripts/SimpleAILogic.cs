@@ -20,6 +20,14 @@ public class SimpleAILogic : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
+
+        GameObject player = GameObject.FindGameObjectWithTag("PlayerTarget");
+
+        if (player != null)
+            Target = player.transform;
+        else
+            Debug.LogError("Player not found!");
+        //Debug.Log("NPC: " + transform.position + " Player: " + Target.position);
         timer = wanderTimer;
     }
 
@@ -34,6 +42,7 @@ public class SimpleAILogic : MonoBehaviour
         float distanceToTarget = Vector3.Distance(transform.position, Target.position);
         timer += Time.deltaTime;
         //Debug.Log("Distance: " + distanceToTarget);
+        //Debug.Log("Target position: " + Target.position);
         // ---- CHASE (continuous update) ----
         if (distanceToTarget <= aggroRange && distanceToTarget > stopDistance)
         {
@@ -83,8 +92,12 @@ public class SimpleAILogic : MonoBehaviour
         Vector3 randomDirection = Random.insideUnitSphere * distance + origin;
 
         NavMeshHit navHit;
-        NavMesh.SamplePosition(randomDirection, out navHit, distance, NavMesh.AllAreas);
 
-        return navHit.position;
+        if (NavMesh.SamplePosition(randomDirection, out navHit, distance, NavMesh.AllAreas))
+        {
+            return navHit.position;
+        }
+
+        return origin; // fallback so we never return invalid positions
     }
 }

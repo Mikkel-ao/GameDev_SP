@@ -84,6 +84,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Capsule
       objectReference: {fileID: 0}
+    - target: {fileID: 9084336458952205543, guid: a85c18e3e08c33f429c3707273f6b61a, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 993ebb21a2f50fa4aa84e0b0099f6665, type: 2}
     m_RemovedComponents:
     - {fileID: 8006364092785298579, guid: a85c18e3e08c33f429c3707273f6b61a, type: 3}
     - {fileID: 1206422774896620672, guid: a85c18e3e08c33f429c3707273f6b61a, type: 3}
@@ -93,13 +97,19 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7948708067851742417, guid: a85c18e3e08c33f429c3707273f6b61a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4233714585794049728}
-    - targetCorrespondingSourceObject: {fileID: 7948708067851742417, guid: a85c18e3e08c33f429c3707273f6b61a, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 3327347326780214028}
     - targetCorrespondingSourceObject: {fileID: 7948708067851742417, guid: a85c18e3e08c33f429c3707273f6b61a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8215121104075363176}
+    - targetCorrespondingSourceObject: {fileID: 7948708067851742417, guid: a85c18e3e08c33f429c3707273f6b61a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3709116911591108826}
+    - targetCorrespondingSourceObject: {fileID: 7948708067851742417, guid: a85c18e3e08c33f429c3707273f6b61a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3529493502210736298}
+    - targetCorrespondingSourceObject: {fileID: 7948708067851742417, guid: a85c18e3e08c33f429c3707273f6b61a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6848146553899802246}
   m_SourcePrefab: {fileID: 100100000, guid: a85c18e3e08c33f429c3707273f6b61a, type: 3}
 --- !u!4 &680808480833677445 stripped
 Transform:
@@ -111,20 +121,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7948708067851742417, guid: a85c18e3e08c33f429c3707273f6b61a, type: 3}
   m_PrefabInstance: {fileID: 2745585997992038746}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4233714585794049728
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5212138340891999627}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14142a3a89917454fa117da73d4b4bef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SimpleRandomWalk
-  wanderRadius: 10
-  wanderTimer: 5
 --- !u!195 &3327347326780214028
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -170,3 +166,65 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3709116911591108826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5212138340891999627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef08b059fa3688e44a2b5c74ee6c7d56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SimpleAILogic
+  wanderRadius: 10
+  wanderTimer: 5
+  aggroRange: 12
+  stopDistance: 2.5
+  Target: {fileID: 5914328401034305912, guid: 1e2e0eefd4b4804a89c7572b1d3c0706, type: 3}
+--- !u!54 &3529493502210736298
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5212138340891999627}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &6848146553899802246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5212138340891999627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3628723564ffed94a8fc75ab8f75cb43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  maxHealth: 100
+  currentHealth: 0
+  deathEffectPrefab: {fileID: 0}
+  destroyOnDeath: 1
+  destroyDelay: 3.4
+  healthBar: {fileID: 0}

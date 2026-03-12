@@ -4,9 +4,11 @@ public class DealDamage : MonoBehaviour
 {
     [SerializeField] private float damage = 10f;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other) 
     {
-        Debug.Log($"Sword hit: {other.name}  Tag={other.tag}");
+        if (other.transform.root == transform.root) return;
+        
+        Debug.Log($"Punch hit: {other.name}  Tag={other.tag}");
 
         Health enemy = other.GetComponentInParent<Health>();
         if (enemy != null)
