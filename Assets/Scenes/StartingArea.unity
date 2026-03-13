@@ -13965,6 +13965,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 3655023263252554395, guid: 57fa452748b22731f9c38a0c3285f638, type: 3}
+      propertyPath: field of view
+      value: 60.000004
+      objectReference: {fileID: 0}
+    - target: {fileID: 3655023263252554395, guid: 57fa452748b22731f9c38a0c3285f638, type: 3}
+      propertyPath: far clip plane
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3655023263252554395, guid: 57fa452748b22731f9c38a0c3285f638, type: 3}
+      propertyPath: orthographic size
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6940253385429185898, guid: 57fa452748b22731f9c38a0c3285f638, type: 3}
       propertyPath: m_LocalPosition.x
       value: 21.08166
