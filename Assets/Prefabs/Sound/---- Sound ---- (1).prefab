@@ -176,14 +176,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SoundScripts.SoundManager_main.SoundManager
   sounds:
-  - type: 6
+  - type: 7
     clips:
     - {fileID: 8300000, guid: ad775b1edd713f44f8a21b1c03e836f6, type: 3}
     volume: 1
-  musicSource: {fileID: 0}
+  - type: 1
+    clips:
+    - {fileID: 8300000, guid: d25abc52c19fe894a934fc3e312f0686, type: 3}
+    volume: 0.5
+  - type: 3
+    clips:
+    - {fileID: 8300000, guid: aab0b21cf44ea4d1881a3f5fe1bc4a27, type: 3}
+    volume: 0.5
+  - type: 6
+    clips:
+    - {fileID: 8300000, guid: 0f97864d84476bf438df6c00f6828459, type: 3}
+    volume: 0.5
+  musicSource: {fileID: 1019038068608204631}
   sfxSource: {fileID: 0}
   volumeSlider: {fileID: 0}
-  masterVolume: 1
+  masterVolume: 0.5
   autoPlayBackground: 1
 --- !u!114 &2446767591784580985
 MonoBehaviour:
@@ -198,4 +210,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PauseMenu
   menuPanel: {fileID: 0}
+  inventoryUIToggle: {fileID: 0}
   volumeSlider: {fileID: 0}

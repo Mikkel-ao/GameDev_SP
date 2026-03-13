@@ -6,5 +6,6 @@ public enum SoundType
     ATTACK,
     DAMAGE,
     DEATH,
+    ITEM_PICKUP,
     BACKGROUND,
 }

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d25abc52c19fe894a934fc3e312f0686
+guid: 0f97864d84476bf438df6c00f6828459
 AudioImporter:
   externalObjects: {}
   serializedVersion: 6
@@ -26,5 +26,5 @@ AssetOrigin:
   packageName: HALFTONE Sound Effects Pack LITE
   packageVersion: 1.0
   assetPath: Assets/Audio/FX/VOiD1 Gaming - HALFTONE SFX PACK LITE/HALFTONE SFX Pack
-    LITE/Gameplay/3. Movement/Jump_1.wav
+    LITE/Gameplay/5. Collectibles/Collectibles_2.wav
   uploadId: 388771
