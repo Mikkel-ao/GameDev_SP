@@ -1,8 +1,8 @@
 fileFormatVersion: 2
-guid: 8e0a0713c3064db41842f509eb3d54a8
+guid: aab0b21cf44ea4d1881a3f5fe1bc4a27
 AudioImporter:
   externalObjects: {}
-  serializedVersion: 8
+  serializedVersion: 7
   defaultSettings:
     serializedVersion: 2
     loadType: 0
@@ -21,3 +21,10 @@ AudioImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 285382
+  packageName: Effort Sounds (Male) - NPC/Player Audio Pack
+  packageVersion: 1.0
+  assetPath: Assets/Audio/FX/NPC or Player/Effort Sounds/06. Effort Grunt (Male).wav
+  uploadId: 664920
