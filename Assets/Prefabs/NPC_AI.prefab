@@ -110,12 +110,78 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7948708067851742417, guid: a85c18e3e08c33f429c3707273f6b61a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6848146553899802246}
+    - targetCorrespondingSourceObject: {fileID: 1596675879757049345, guid: a85c18e3e08c33f429c3707273f6b61a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1268473513624356064}
+    - targetCorrespondingSourceObject: {fileID: 545747982159668600, guid: a85c18e3e08c33f429c3707273f6b61a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4619242710004728307}
+    - targetCorrespondingSourceObject: {fileID: 545747982159668600, guid: a85c18e3e08c33f429c3707273f6b61a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8443968024727993657}
   m_SourcePrefab: {fileID: 100100000, guid: a85c18e3e08c33f429c3707273f6b61a, type: 3}
 --- !u!4 &680808480833677445 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3416244611707845087, guid: a85c18e3e08c33f429c3707273f6b61a, type: 3}
   m_PrefabInstance: {fileID: 2745585997992038746}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2416362683576710178 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 545747982159668600, guid: a85c18e3e08c33f429c3707273f6b61a, type: 3}
+  m_PrefabInstance: {fileID: 2745585997992038746}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &4619242710004728307
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2416362683576710178}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.023
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8443968024727993657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2416362683576710178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feb52aa7e4f1a544890e6365848eac9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DealDamage
+  damage: 10
+--- !u!1 &3473066599571816283 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1596675879757049345, guid: a85c18e3e08c33f429c3707273f6b61a, type: 3}
+  m_PrefabInstance: {fileID: 2745585997992038746}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1268473513624356064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3473066599571816283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a151d42bbe154ed42abe1e33c43da868, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitboxController
+  hitbox: {fileID: 4619242710004728307}
 --- !u!1 &5212138340891999627 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7948708067851742417, guid: a85c18e3e08c33f429c3707273f6b61a, type: 3}
@@ -183,6 +249,7 @@ MonoBehaviour:
   aggroRange: 12
   stopDistance: 2.5
   Target: {fileID: 5914328401034305912, guid: 1e2e0eefd4b4804a89c7572b1d3c0706, type: 3}
+  attackCooldown: 2
 --- !u!54 &3529493502210736298
 Rigidbody:
   m_ObjectHideFlags: 0

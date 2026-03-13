@@ -16,6 +16,10 @@ public class SimpleAILogic : MonoBehaviour
     private Animator animator;
     private float timer;
 
+    [Header("Combat Settings")] 
+    public float attackCooldown = 2f;
+
+    private float attackTimer = 0f;
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -41,6 +45,7 @@ public class SimpleAILogic : MonoBehaviour
 
         float distanceToTarget = Vector3.Distance(transform.position, Target.position);
         timer += Time.deltaTime;
+        attackTimer += Time.deltaTime;
         //Debug.Log("Distance: " + distanceToTarget);
         //Debug.Log("Target position: " + Target.position);
         // ---- CHASE (continuous update) ----
@@ -56,15 +61,15 @@ public class SimpleAILogic : MonoBehaviour
             agent.SetDestination(transform.position);
             combat();
         }
-        // ---- TARGET LOST ----
-        if (distanceToTarget > aggroRange)
-        {
-            Debug.Log("Target Lost!");
-        }
         // ---- WANDER ----
         else
         {
             Wander();
+        }
+        // ---- TARGET LOST ----
+        if (distanceToTarget > aggroRange)
+        {
+            Debug.Log("Target Lost!");
         }
 
         // ---- ANIMATION ----
@@ -85,7 +90,14 @@ public class SimpleAILogic : MonoBehaviour
 
     void combat()
     {
-        
+        Vector3 direction = Target.position - transform.position;
+        direction.y = 0;
+        transform.rotation = Quaternion.LookRotation(direction);
+        if (attackTimer >= attackCooldown)
+        {
+            animator.SetTrigger("NPC_Attack");
+            attackTimer = 0f;
+        }
     }
     public static Vector3 RandomNavSphere(Vector3 origin, float distance)
     {
