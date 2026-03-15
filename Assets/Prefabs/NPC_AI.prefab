@@ -182,6 +182,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7948708067851742417, guid: a85c18e3e08c33f429c3707273f6b61a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6848146553899802246}
+    - targetCorrespondingSourceObject: {fileID: 7948708067851742417, guid: a85c18e3e08c33f429c3707273f6b61a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 618461188399796778}
     - targetCorrespondingSourceObject: {fileID: 1596675879757049345, guid: a85c18e3e08c33f429c3707273f6b61a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1268473513624356064}
@@ -367,3 +370,17 @@ MonoBehaviour:
   destroyOnDeath: 1
   destroyDelay: 3.4
   healthBar: {fileID: 0}
+--- !u!114 &618461188399796778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5212138340891999627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6c2d8c9732508a4e9cfed36412acadc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitFlash
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashTime: 0.1

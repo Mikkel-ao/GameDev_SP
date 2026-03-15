@@ -64,7 +64,12 @@ public class Health : MonoBehaviour
 
         currentHealth = Mathf.Max(0f, currentHealth - damage);
         Debug.Log($"{gameObject.name} took {damage} damage. Health: {currentHealth}/{maxHealth}");
-
+        
+        //Hit flash trigger
+        HitFlash flash = GetComponent<HitFlash>();
+        if (flash != null)
+            flash.Flash();
+        
         NotifyHealthChanged();
 
         if (currentHealth <= 0f)
