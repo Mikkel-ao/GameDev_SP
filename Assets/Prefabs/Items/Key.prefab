@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7252511386779322040}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.061, y: -0.88384, z: -36.834473}
   m_LocalScale: {x: 0.99293, y: 0.99293, z: 0.99293}
   m_ConstrainProportionsScale: 0
@@ -109,7 +109,7 @@ MonoBehaviour:
   rotateX: 0
   rotateY: 1
   rotateZ: 0
-  rotationSpeed: 85.67
+  rotationSpeed: 90
   isFloating: 1
   useEasingForFloating: 1
   floatHeight: 1.93
@@ -152,4 +152,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c95cc8960f37e894ca363ed49f9f4179, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
-  itemIcon: {fileID: 21300000, guid: a34fcfc07bc6c9d429caa21383e671e6, type: 3}
+  itemData: {fileID: 11400000, guid: a45f338f53c843842a4d0c8639ab37fa, type: 2}
+  quantity: 1
