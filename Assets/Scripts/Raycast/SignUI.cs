@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 /// <summary>
 /// Handles showing/hiding a UI panel when the player enters/exits a trigger zone.
@@ -6,19 +7,20 @@ using UnityEngine;
 /// </summary>
 public class SignUI : MonoBehaviour
 {
-    [SerializeField] private GameObject welcomePanel;
+    // [FormerlySerializedAs("welcomePanel")] helps unity to search for the old name also 
+    [FormerlySerializedAs("welcomePanel")] [SerializeField] private GameObject panelToShow;
 
     private void Awake()
     {
         // Warn if welcomePanel is not assigned in Inspector
-        if (welcomePanel == null)
+        if (panelToShow == null)
         {
             Debug.LogWarning("SignUI: welcomePanel is not assigned.", this);
             return;
         }
 
         // Ensure panel starts hidden
-        welcomePanel.SetActive(false);
+        panelToShow.SetActive(false);
     }
 
     /// <summary>
@@ -27,12 +29,12 @@ public class SignUI : MonoBehaviour
     /// </summary>
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player") || welcomePanel == null)
+        if (!other.CompareTag("Player") || panelToShow == null)
         {
             return;
         }
 
-        welcomePanel.SetActive(true);
+        panelToShow.SetActive(true);
     }
 
     /// <summary>
@@ -41,11 +43,11 @@ public class SignUI : MonoBehaviour
     /// </summary>
     private void OnTriggerExit(Collider other)
     {
-        if (!other.CompareTag("Player") || welcomePanel == null)
+        if (!other.CompareTag("Player") || panelToShow == null)
         {
             return;
         }
 
-        welcomePanel.SetActive(false);
+        panelToShow.SetActive(false);
     }
 }
