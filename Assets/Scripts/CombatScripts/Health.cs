@@ -8,7 +8,7 @@ public class Health : MonoBehaviour
     [SerializeField] private float currentHealth;
 
     [Header("Death")]
-    [SerializeField] private GameObject deathEffectPrefab;
+    [SerializeField] private String deathTriggerName = "Die";
     [SerializeField] private bool destroyOnDeath = true;
     [SerializeField] private float destroyDelay = 3.4f;
 
@@ -74,6 +74,7 @@ public class Health : MonoBehaviour
 
         if (currentHealth <= 0f)
         {
+            Debug.Log("Health reached Zero");
             Die();
         }
     }
@@ -90,54 +91,49 @@ public class Health : MonoBehaviour
     }
 
     public void Die()
+{
+    // Prevent double-death
+    if (isDead) return;
+    isDead = true;
+
+    currentHealth = 0f;
+    NotifyHealthChanged();
+    OnDied?.Invoke();
+
+    Debug.Log($"{gameObject.name} has died!");
+
+    // Trigger death animation first
+    Animator animator = GetComponentInChildren<Animator>();
+    if (animator != null)
     {
-        // Prevent double-death side effects (events, FX, destroy calls).
-        if (isDead)
-        {
-            return;
-        }
-
-        isDead = true;
-        currentHealth = 0f;
-        NotifyHealthChanged();
-        OnDied?.Invoke();
-
-        Debug.Log($"{gameObject.name} has died!");
-
-        Animator animator = GetComponent<Animator>();
-        if (animator != null)
-        {
-            animator.SetBool("isDead", true);
-        }
-
-        if (deathEffectPrefab != null)
-        {
-            Instantiate(deathEffectPrefab, transform.position, Quaternion.Euler(-90f, 0f, 0f));
-        }
-
-        Collider col = GetComponent<Collider>();
-        if (col != null)
-        {
-            col.enabled = false;
-        }
-
-        // Disable other behaviours so dead objects stop acting immediately.
-        MonoBehaviour[] scripts = GetComponents<MonoBehaviour>();
-        foreach (MonoBehaviour script in scripts)
-        {
-            if (script != this)
-            {
-                script.enabled = false;
-            }
-        }
-
-        enabled = false;
-
-        if (destroyOnDeath)
-        {
-            Destroy(gameObject, destroyDelay);
-        }
+        Debug.Log("I'm dead");
+        animator.SetTrigger(deathTriggerName);
     }
+    else
+
+    {
+        Debug.LogWarning("No Animator found in Children");
+    }
+
+    // Disable collider
+    Collider col = GetComponent<Collider>();
+    if (col != null)
+        col.enabled = false;
+
+    // Disable other behaviours
+    MonoBehaviour[] scripts = GetComponents<MonoBehaviour>();
+    foreach (MonoBehaviour script in scripts)
+    {
+        if (script != this)
+            script.enabled = false;
+    }
+
+    enabled = false;
+
+    // Destroy after a delay
+    if (destroyOnDeath)
+        Destroy(gameObject, destroyDelay);
+}
 
     private void NotifyHealthChanged()
     {

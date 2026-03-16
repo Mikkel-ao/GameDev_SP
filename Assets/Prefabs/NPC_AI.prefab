@@ -366,7 +366,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHealth: 100
   currentHealth: 0
-  deathEffectPrefab: {fileID: 0}
+  deathTriggerName: Die
   destroyOnDeath: 1
   destroyDelay: 3.4
   healthBar: {fileID: 0}
