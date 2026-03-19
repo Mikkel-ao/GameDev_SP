@@ -37,6 +37,7 @@ public class ItemPickup : MonoBehaviour
             // Only destroy this object if the item was successfully added
             if (wasSuccessful)
             {
+                SoundManager.PlaySound(SoundType.ITEM_PICKUP);
                 Destroy(gameObject);
                 
             }

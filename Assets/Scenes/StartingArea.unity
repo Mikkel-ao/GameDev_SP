@@ -3281,14 +3281,30 @@ PrefabInstance:
       objectReference: {fileID: 540877483}
     - target: {fileID: 8765798316889069363, guid: 17848ee8e828bc94984d89b683e4a707, type: 3}
       propertyPath: sounds.Array.size
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8765798316889069363, guid: 17848ee8e828bc94984d89b683e4a707, type: 3}
       propertyPath: sounds.Array.data[1].type
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8765798316889069363, guid: 17848ee8e828bc94984d89b683e4a707, type: 3}
+      propertyPath: sounds.Array.data[2].type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8765798316889069363, guid: 17848ee8e828bc94984d89b683e4a707, type: 3}
+      propertyPath: sounds.Array.data[3].type
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8765798316889069363, guid: 17848ee8e828bc94984d89b683e4a707, type: 3}
       propertyPath: sounds.Array.data[1].volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8765798316889069363, guid: 17848ee8e828bc94984d89b683e4a707, type: 3}
+      propertyPath: sounds.Array.data[2].volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8765798316889069363, guid: 17848ee8e828bc94984d89b683e4a707, type: 3}
+      propertyPath: sounds.Array.data[3].volume
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8765798316889069363, guid: 17848ee8e828bc94984d89b683e4a707, type: 3}
@@ -3296,9 +3312,25 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8765798316889069363, guid: 17848ee8e828bc94984d89b683e4a707, type: 3}
+      propertyPath: sounds.Array.data[2].clips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8765798316889069363, guid: 17848ee8e828bc94984d89b683e4a707, type: 3}
+      propertyPath: sounds.Array.data[3].clips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8765798316889069363, guid: 17848ee8e828bc94984d89b683e4a707, type: 3}
       propertyPath: 'sounds.Array.data[1].clips.Array.data[0]'
       value: 
-      objectReference: {fileID: 8300000, guid: 8e0a0713c3064db41842f509eb3d54a8, type: 3}
+      objectReference: {fileID: 8300000, guid: 9a937d9cd4a28d145ae5ea0e3320d177, type: 3}
+    - target: {fileID: 8765798316889069363, guid: 17848ee8e828bc94984d89b683e4a707, type: 3}
+      propertyPath: 'sounds.Array.data[2].clips.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 4dd3709bc57e142658a6b53f15346ce6, type: 3}
+    - target: {fileID: 8765798316889069363, guid: 17848ee8e828bc94984d89b683e4a707, type: 3}
+      propertyPath: 'sounds.Array.data[3].clips.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 37011f4a0d0cc4c4b8d6cfd002394978, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14083,15 +14115,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4524208067604785704, guid: 063e98909dbbda60c9c9f230cf885840, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -123.283035
+      value: -123.29605
       objectReference: {fileID: 0}
     - target: {fileID: 4524208067604785704, guid: 063e98909dbbda60c9c9f230cf885840, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.09989
+      value: 10.099889
       objectReference: {fileID: 0}
     - target: {fileID: 4524208067604785704, guid: 063e98909dbbda60c9c9f230cf885840, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 53.75314
+      value: 53.766148
       objectReference: {fileID: 0}
     - target: {fileID: 4524208067604785704, guid: 063e98909dbbda60c9c9f230cf885840, type: 3}
       propertyPath: m_LocalRotation.w
@@ -14504,15 +14536,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6940253385429185898, guid: 57fa452748b22731f9c38a0c3285f638, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -123.283035
+      value: -123.29605
       objectReference: {fileID: 0}
     - target: {fileID: 6940253385429185898, guid: 57fa452748b22731f9c38a0c3285f638, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.09989
+      value: 10.099889
       objectReference: {fileID: 0}
     - target: {fileID: 6940253385429185898, guid: 57fa452748b22731f9c38a0c3285f638, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 53.75314
+      value: 53.766148
       objectReference: {fileID: 0}
     - target: {fileID: 6940253385429185898, guid: 57fa452748b22731f9c38a0c3285f638, type: 3}
       propertyPath: m_LocalRotation.w

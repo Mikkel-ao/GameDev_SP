@@ -77,17 +77,7 @@ public class Health : MonoBehaviour
             Die();
         }
     }
-
-    public void Heal(float amount)
-    {
-        if (isDead || amount <= 0f)
-        {
-            return;
-        }
-
-        currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
-        NotifyHealthChanged();
-    }
+    
 
     public void Die()
     {
