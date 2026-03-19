@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject menuPanel;
+    [SerializeField] private GameObject healthBarUI;
     [SerializeField] private InventoryUIToggle inventoryUIToggle; // Reference to inventory UI for disabling input
 
     private InputSystem_Actions inputActions;
@@ -73,6 +74,11 @@ public class PauseMenu : MonoBehaviour
             Debug.LogWarning("PauseMenu: inventoryUIToggle is NULL! Can't communicate with inventory!");
         }
 
+        if (healthBarUI != null)
+        {
+            healthBarUI.SetActive(!isPaused);
+        }
+
         if (menuPanel.activeSelf)
         {
             BindVolumeSlider();
@@ -87,6 +93,11 @@ public class PauseMenu : MonoBehaviour
         if (inventoryUIToggle != null)
         {
             inventoryUIToggle.SetInputEnabled(true);
+        }
+        // Re-enable health bar input when pause menu closes
+        if (healthBarUI != null)
+        {
+            healthBarUI.SetActive(true);
         }
     }
 
