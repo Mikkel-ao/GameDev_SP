@@ -94,10 +94,11 @@ public class Health : MonoBehaviour
 
         Debug.Log($"{gameObject.name} has died!");
 
-        Animator animator = GetComponent<Animator>();
+        Animator animator = GetComponentInChildren<Animator>();
         if (animator != null)
         {
-            animator.SetBool("isDead", true);
+            Debug.Log("I'm Dead");
+            animator.SetTrigger("IsDead");
         }
 
         if (deathEffectPrefab != null)
