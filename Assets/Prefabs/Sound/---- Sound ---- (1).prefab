@@ -180,10 +180,22 @@ MonoBehaviour:
     clips:
     - {fileID: 8300000, guid: ad775b1edd713f44f8a21b1c03e836f6, type: 3}
     volume: 1
-  musicSource: {fileID: 0}
+  - type: 1
+    clips:
+    - {fileID: 8300000, guid: 9a937d9cd4a28d145ae5ea0e3320d177, type: 3}
+    volume: 1
+  - type: 3
+    clips:
+    - {fileID: 8300000, guid: 4dd3709bc57e142658a6b53f15346ce6, type: 3}
+    volume: 1
+  - type: 6
+    clips:
+    - {fileID: 8300000, guid: 37011f4a0d0cc4c4b8d6cfd002394978, type: 3}
+    volume: 1
+  musicSource: {fileID: 1019038068608204631}
   sfxSource: {fileID: 0}
   volumeSlider: {fileID: 0}
-  masterVolume: 1
+  masterVolume: 0.519
   autoPlayBackground: 1
 --- !u!114 &2446767591784580985
 MonoBehaviour:
@@ -198,4 +210,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PauseMenu
   menuPanel: {fileID: 0}
+  inventoryUIToggle: {fileID: 0}
   volumeSlider: {fileID: 0}
