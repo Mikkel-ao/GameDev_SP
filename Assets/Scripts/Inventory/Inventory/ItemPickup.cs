@@ -38,6 +38,7 @@ public class ItemPickup : MonoBehaviour
             if (wasSuccessful)
             {
                 Destroy(gameObject);
+                
             }
             else
             {
